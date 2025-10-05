@@ -1,0 +1,38 @@
+name: Dependency Cache Demo
+
+on:
+  workflow_dispatch:  # manually trigger karne ke liye
+
+jobs:
+  cache-demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: prime-cache-f03a377
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-f03a377
+      - name: Show cache status
+        run: echo "Cache result: ${{ steps.cache.outputs.cache-hit }}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+          echo "Dependencies installed successfully!"
+
+      - name: Verify script
+        run: |
+          python - <<'PY'
+          import requests
+          print("✅ Cache workflow is working fine, Sandip!")
+          PY
