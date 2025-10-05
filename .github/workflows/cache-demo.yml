@@ -12,13 +12,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: prime-cache-f03a377
-        id: cache
+        id: cache-step
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: cache-f03a377
+
       - name: Show cache status
-        run: echo "Cache result: ${{ steps.cache.outputs.cache-hit }}"
+        run: echo "Cache result: ${{ steps.cache-step.outputs.cache-hit }}"
 
       - name: Set up Python
         uses: actions/setup-python@v4
